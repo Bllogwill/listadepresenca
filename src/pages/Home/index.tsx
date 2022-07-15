@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles.css'
 
 import {Card} from'../../componets/card';
@@ -16,12 +16,21 @@ export function Home() {
         second:'2-digit',
       })
     }
-    setStudents([newStudent]);
+    setStudents(prevState=>[...prevState, newStudent]);
   }
-    
+    useEffect(() => {
+      console.log(" useEffect foi chamado!")
+    },[]);
+
     return (
       <div className='container'>
-      <h1>Lista de Presenca</h1>  
+      <header>
+      <h1>Lista de Presenca</h1> 
+      <div>
+        <strong>William Silva</strong>
+        <img src="https://viagemeturismo.abril.com.br/wp-content/uploads/2016/10/malta_-_valletta_from_marsamxett_harbour_01_by_clive_vella.jpeg?quality=70&strip=info&w=882&w=636" alt="Foto da malta" />
+      </div>
+        </header> 
 
       <h1>Nome: {studentName}</h1>
 
@@ -31,12 +40,15 @@ export function Home() {
         onChange={e => setStudentName(e.target.value)}
       />
             
-      <button type="button">Adcionar</button>
+      <button type="button" onClick={handleAddStudent}>
+        Adcionar
+        </button>
 
       {
         students.map(student => {
           return(
             <Card 
+              key={student.time}
               name={student.name} 
               time={student.time} 
             />
