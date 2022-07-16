@@ -24,6 +24,14 @@ export function Home() {
     }, []);
 
   function handleAddStudent(){
+
+    // 1. validar se o campo e vazio
+
+    if (studentName === ''){
+      return
+    }
+
+    // 2. Montar (criar) Objeto com o nome
     const newStudent = {
       name: studentName,
       time: new Date().toLocaleDateString("pt-br",{
@@ -32,7 +40,12 @@ export function Home() {
         second:'2-digit',
       })
     }
+
+    // 3. Guardar o objeto na lista
     setStudents(prevState=>[...prevState, newStudent]);
+
+    // 4. Limpar o campo nome
+    setStudentName('')
   }
     
 
@@ -51,13 +64,14 @@ export function Home() {
       <input 
         type="text" 
         placeholder="Digite o Nome..."
-        onChange={e => setStudentName(e.target.value)}
+        value={studentName}
+        onChange={event => setStudentName(event.target.value)}
       />
             
       <button type="button" onClick={handleAddStudent}>
         Adcionar
         </button>
-
+      <div className="contentCards">
       {
         students.map(student => {
           return(
@@ -68,7 +82,9 @@ export function Home() {
             />
           ) 
         })       
-      }            
+      }
+      </div>
+                 
     </div>
   )
 }
